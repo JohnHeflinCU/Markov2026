@@ -1,0 +1,32 @@
+clc
+clear
+close all
+
+
+
+N=logspace(1,7,30);
+%log scaled variable
+for i=1:length(N)
+    %for loop to rotate though each log
+    count=0;
+    for j=1:N(i)
+        X=rand;
+        Y=rand;
+        Z=rand;
+        if X.^2+Y.^2<Z && Z.^2>X.*Y
+            count=count+1;
+        else
+            count=count;
+        end
+    end
+    P(i)=count./N(i);
+end
+
+
+figure
+semilogx(N,P)
+xlabel('Number of Monte Carlo Simulations (log scale)')
+ylabel('Probability')
+title('Probability versus Number of Monte Carlo Simulations')
+
+%Creates log scaled plot of nu
