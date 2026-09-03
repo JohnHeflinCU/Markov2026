@@ -4,7 +4,7 @@ close all
 
 
 
-N=logspace(1,7,30);
+N=round(logspace(1,7,30));
 %log scaled variable
 for i=1:length(N)
     %for loop to rotate though each logscaled number of iterations N
@@ -14,6 +14,7 @@ for i=1:length(N)
         X=rand;
         Y=rand;
         Z=rand;
+        
         %uniform random variables X, Y, and Z
         if X.^2+Y.^2<Z && Z.^2>X.*Y
             count=count+1;
@@ -38,3 +39,4 @@ title('Probability versus Number of Monte Carlo Simulations')
 %Creates log scaled plot of number of iterations versus probability
 
 %Converges to about P=0.376
+
