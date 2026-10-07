@@ -1,0 +1,405 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>HW4_Main_Heflin</title>
+<meta name="generator" content="MATLAB 26.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2026-09-30">
+<meta name="DC.source" content="HW4_Main_Heflin.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#2">Problem 4</a>
+</li>
+</ul>
+</div>
+<pre class="codeinput">clear
+clc
+close <span class="string">all</span>
+</pre>
+<h2 id="2">Problem 4</h2>
+<pre class="codeinput">
+<span class="comment">%{
+</span><span class="comment">Discrete Steps:
+</span><span class="comment">U: 1/2
+</span><span class="comment">I: 1/4, 1/2, 1/4 --&gt; 1/4, 3/4
+</span><span class="comment">M: 1/4, 3/4 --&gt; 1/4
+</span><span class="comment">N: 3/4, 1/4 --&gt; 1/4
+</span><span class="comment">N': 1/2
+</span><span class="comment">A: 1
+</span><span class="comment">%}
+</span>n=10e4;
+y_u=0;
+t_u=zeros(n,1);
+t_u_A=[];
+t_u_F=[];
+<span class="keyword">for</span> i=1:n
+
+    U=rand(1);
+    [x,t_u(i)]=discrete_U(U,t_u(i));
+    y_u=y_u+x; <span class="comment">%counts number of folded</span>
+
+    <span class="keyword">if</span> x==1
+        t_u_F(end+1,1)=t_u(i); <span class="comment">%takes values for x=1, folded</span>
+    <span class="keyword">else</span>
+        t_u_A(end+1,1)=t_u(i); <span class="comment">%takes values for x=0, aggregate</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+p_u=y_u./n
+tau_U_F=mean(t_u_F);
+tau_U_A=mean(t_u_A);
+tau_U=mean(t_u);
+
+
+t_i_F=[];
+t_i_A=[];
+y_i=0;
+t_i=zeros(n,1);
+<span class="keyword">for</span> i=1:n
+
+    U=rand(1);
+
+    [x,t_i(i)]=discrete_I(U,t_i(i));
+    y_i=y_i+x;
+    <span class="keyword">if</span> x==1
+        t_i_F(end+1,1)=t_i(i);
+    <span class="keyword">else</span>
+        t_i_A(end+1,1)=t_i(i);
+    <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+p_i=y_i./n
+tau_i_F=mean(t_i_F);
+tau_i_A=mean(t_i_A);
+tau_i=mean(t_i);
+figure
+hold <span class="string">on</span>
+histogram(t_i_F, <span class="string">'Normalization'</span>, <span class="string">'pdf'</span>)
+xline(tau_i_F)
+xlabel(<span class="string">'Number of steps folded'</span>)
+ylabel(<span class="string">'Probability'</span>)
+legend(<span class="string">'Histogram'</span>,<span class="string">'Tau_x'</span>)
+title(<span class="string">'Distribution of Steps Starting at I Folded'</span>)
+hold <span class="string">off</span>
+figure
+histogram(t_i_A, <span class="string">'Normalization'</span>, <span class="string">'pdf'</span>)
+xline(tau_i_A)
+xlabel(<span class="string">'Number of steps aggregate'</span>)
+ylabel(<span class="string">'Probability'</span>)
+legend(<span class="string">'Histogram'</span>,<span class="string">'Tau_x'</span>)
+title(<span class="string">'Distribution of Steps Starting at I Aggregate'</span>)
+y_m=0;
+t_m=zeros(n,1);
+t_m_F=[];
+t_m_A=[];
+<span class="keyword">for</span> i=1:n
+
+    U=rand(1);
+    [x,t_m(i)]=discrete_M(U,t_m(i));
+    y_m=y_m+x;
+
+    <span class="keyword">if</span> x==1
+        t_m_F(end+1,1)=t_m(i);
+    <span class="keyword">else</span>
+        t_m_A(end+1,1)=t_m(i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+p_m=y_m./n
+tau_M_F=mean(t_m_F);
+tau_M_A=mean(t_m_A);
+tau_m=mean(t_m);
+<span class="comment">%Functions to retrieve aggregate or folded value using discrete inverse</span>
+<span class="comment">%transform</span>
+<span class="keyword">function</span> [y,t]=discrete_U(U,t)
+V=rand(1);
+t=t+1;
+<span class="keyword">if</span> U&lt;=.5
+    [y,t]=discrete_I(V,t);
+<span class="keyword">else</span>
+    [y,t]=discrete_M(V,t);
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">function</span> [y,t]=discrete_M(U,t)
+V=rand(1);
+t=t+1;
+<span class="keyword">if</span> U&lt;=.25
+    y=0;
+<span class="keyword">else</span>
+    [y,t]=discrete_U(V,t);
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">function</span> [y,t]=discrete_I(U,t)
+V=rand(1);
+t=t+1;
+<span class="keyword">if</span> U&lt;=.5
+    y=1;
+<span class="keyword">elseif</span> U&lt;=.75
+    y=0;
+<span class="keyword">else</span>
+    [y,t]=discrete_U(V,t);
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">%Creating table</span>
+tau_empirical=[tau_U; tau_i; tau_m];
+tau_empirical_A=[tau_U_A; tau_i_A; tau_M_A];
+tau_empirical_F=[tau_U_F; tau_i_F; tau_M_F];
+tau_analytical=[4; 2; 4];
+
+h_empirical=[p_u; p_i; p_m];
+h_analytical=[0.5; 0.625; 0.375];
+Starting_State=[<span class="string">'U'</span>; <span class="string">'I'</span>; <span class="string">'M'</span>];
+var_name=[<span class="string">'State'</span>, <span class="string">'Tau_x'</span>, <span class="string">'Tau_x^F'</span>, <span class="string">'Tau_x^A'</span>, <span class="string">'g_x'</span>, <span class="string">'h_x empirical'</span>, <span class="string">'h_x analytical'</span>];
+
+table(Starting_State, tau_empirical,tau_empirical_F,tau_empirical_A , tau_analytical, h_empirical, h_analytical, <span class="string">'VariableNames'</span>, {<span class="string">'State'</span>, <span class="string">'Tau_x'</span>, <span class="string">'Tau_x^F'</span>, <span class="string">'Tau_x^A'</span>, <span class="string">'g_x'</span>, <span class="string">'h_x empirical'</span>, <span class="string">'h_x analytical'</span>})
+</pre>
+<pre class="codeoutput">
+p_u =
+
+    0.5020
+
+
+p_i =
+
+    0.6264
+
+
+p_m =
+
+    0.3748
+
+
+ans =
+
+  3&times;7 table
+
+    State    Tau_x     Tau_x^F    Tau_x^A    g_x    h_x empirical    h_x analytical
+    _____    ______    _______    _______    ___    _____________    ______________
+
+      U      3.9948    3.9941     3.9956      4        0.50196             0.5     
+      I       1.996    1.7931     2.3363      2        0.62643           0.625     
+      M      3.9951    4.9826      3.403      4        0.37483           0.375     
+
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2026a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+
+clear
+clc
+close all
+
+%% Problem 4
+%{
+Discrete Steps: 
+U: 1/2
+I: 1/4, 1/2, 1/4 REPLACE_WITH_DASH_DASH> 1/4, 3/4
+M: 1/4, 3/4 REPLACE_WITH_DASH_DASH> 1/4
+N: 3/4, 1/4 REPLACE_WITH_DASH_DASH> 1/4
+N': 1/2
+A: 1
+%}
+n=10e4;
+y_u=0;
+t_u=zeros(n,1);
+t_u_A=[];
+t_u_F=[];
+for i=1:n
+
+    U=rand(1);
+    [x,t_u(i)]=discrete_U(U,t_u(i));
+    y_u=y_u+x; %counts number of folded
+    
+    if x==1
+        t_u_F(end+1,1)=t_u(i); %takes values for x=1, folded
+    else
+        t_u_A(end+1,1)=t_u(i); %takes values for x=0, aggregate
+    end
+end
+p_u=y_u./n
+tau_U_F=mean(t_u_F);
+tau_U_A=mean(t_u_A);
+tau_U=mean(t_u);
+
+
+t_i_F=[];
+t_i_A=[];
+y_i=0;
+t_i=zeros(n,1);
+for i=1:n
+
+    U=rand(1);
+    
+    [x,t_i(i)]=discrete_I(U,t_i(i));
+    y_i=y_i+x;
+    if x==1
+        t_i_F(end+1,1)=t_i(i);
+    else
+        t_i_A(end+1,1)=t_i(i);
+    end
+
+end
+p_i=y_i./n
+tau_i_F=mean(t_i_F);
+tau_i_A=mean(t_i_A);
+tau_i=mean(t_i);
+figure
+hold on
+histogram(t_i_F, 'Normalization', 'pdf')
+xline(tau_i_F)
+xlabel('Number of steps folded')
+ylabel('Probability')
+legend('Histogram','Tau_x')
+title('Distribution of Steps Starting at I Folded')
+hold off
+figure
+histogram(t_i_A, 'Normalization', 'pdf')
+xline(tau_i_A)
+xlabel('Number of steps aggregate')
+ylabel('Probability')
+legend('Histogram','Tau_x')
+title('Distribution of Steps Starting at I Aggregate')
+y_m=0;
+t_m=zeros(n,1);
+t_m_F=[];
+t_m_A=[];
+for i=1:n
+
+    U=rand(1);
+    [x,t_m(i)]=discrete_M(U,t_m(i));
+    y_m=y_m+x;
+
+    if x==1
+        t_m_F(end+1,1)=t_m(i);
+    else
+        t_m_A(end+1,1)=t_m(i);
+    end
+end
+p_m=y_m./n
+tau_M_F=mean(t_m_F);
+tau_M_A=mean(t_m_A);
+tau_m=mean(t_m);
+%Functions to retrieve aggregate or folded value using discrete inverse
+%transform
+function [y,t]=discrete_U(U,t)
+V=rand(1);
+t=t+1;
+if U<=.5
+    [y,t]=discrete_I(V,t);
+else
+    [y,t]=discrete_M(V,t);
+end
+end
+function [y,t]=discrete_M(U,t)
+V=rand(1);
+t=t+1;
+if U<=.25
+    y=0;
+else
+    [y,t]=discrete_U(V,t);
+end
+end
+function [y,t]=discrete_I(U,t)
+V=rand(1);
+t=t+1;
+if U<=.5
+    y=1;
+elseif U<=.75
+    y=0;
+else
+    [y,t]=discrete_U(V,t);
+end
+end
+
+%Creating table
+tau_empirical=[tau_U; tau_i; tau_m];
+tau_empirical_A=[tau_U_A; tau_i_A; tau_M_A];
+tau_empirical_F=[tau_U_F; tau_i_F; tau_M_F];
+tau_analytical=[4; 2; 4];
+
+h_empirical=[p_u; p_i; p_m];
+h_analytical=[0.5; 0.625; 0.375];
+Starting_State=['U'; 'I'; 'M'];
+var_name=['State', 'Tau_x', 'Tau_x^F', 'Tau_x^A', 'g_x', 'h_x empirical', 'h_x analytical'];
+
+table(Starting_State, tau_empirical,tau_empirical_F,tau_empirical_A , tau_analytical, h_empirical, h_analytical, 'VariableNames', {'State', 'Tau_x', 'Tau_x^F', 'Tau_x^A', 'g_x', 'h_x empirical', 'h_x analytical'})
+##### SOURCE END #####
+-->
+</body>
+</html>
