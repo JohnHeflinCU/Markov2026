@@ -1,0 +1,756 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>HW5_Main_Heflin</title>
+<meta name="generator" content="MATLAB 26.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2026-10-07">
+<meta name="DC.source" content="HW5_Main_Heflin.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#2">Problem 1</a>
+</li>
+<li>
+<a href="#3">Problem 3</a>
+</li>
+</ul>
+</div>
+<pre class="codeinput">clc
+clear
+close <span class="string">all</span>
+</pre>
+<h2 id="2">Problem 1</h2>
+<pre class="codeinput">
+<span class="comment">%b)</span>
+clc
+clear
+a=.3;
+b=.1;
+delta_0=[1,0,0,0,0];
+p_1=zeros(5,5);
+p_1(1,1)=1-a;
+p_1(1,2)=a;
+<span class="keyword">for</span> i=2:4
+
+    p_1(i,i+1)=a.*(4-i)./i;
+    p_1(i,i-1)=b.*i./4;
+    p_1(i,i)=1-p_1(i,i+1)-p_1(i,i-1);
+
+<span class="keyword">end</span>
+p_1
+q_50=delta_0*(p_1^50)
+q_51=delta_0*(p_1^51)
+n=1:60;
+<span class="keyword">for</span> i=1:60
+
+q=delta_0*(p_1^i);
+q_2(i)=q(2);
+q_3(i)=q(3);
+q_ave_2(i)=mean(q_2);
+<span class="keyword">end</span>
+[V,lambda]=eig(p_1)
+figure
+hold <span class="string">on</span>
+plot(n,q_2)
+plot(n,q_3)
+plot(n,q_ave_2)
+legend(<span class="string">'q_2'</span>,<span class="string">'q_3'</span>,<span class="string">'running average'</span>)
+xlabel(<span class="string">'n'</span>)
+ylabel(<span class="string">'q value'</span>)
+hold <span class="string">off</span>
+<span class="keyword">for</span> i=0:4
+pi(i+1)=((.25).^(4-i)).*((3./4).^i).*factorial(4)./(factorial(i).*factorial(4-i))
+<span class="keyword">end</span>
+</pre>
+<pre class="codeoutput">
+p_1 =
+
+    0.7000    0.3000         0         0         0
+    0.0500    0.6500    0.3000         0         0
+         0    0.0750    0.8250    0.1000         0
+         0         0    0.1000    0.9000         0
+         0         0         0         0         0
+
+
+q_50 =
+
+    0.0182    0.1092    0.4366    0.4360         0
+
+
+q_51 =
+
+    0.0182    0.1092    0.4365    0.4360         0
+
+
+V =
+
+    0.8237    0.9829   -0.8485    0.5000         0
+   -0.5491    0.0819   -0.4243    0.5000         0
+    0.1373   -0.1433   -0.1414    0.5000         0
+   -0.0343    0.0819    0.2828    0.5000         0
+         0         0         0         0    1.0000
+
+
+lambda =
+
+    0.5000         0         0         0         0
+         0    0.7250         0         0         0
+         0         0    0.8500         0         0
+         0         0         0    1.0000         0
+         0         0         0         0         0
+
+
+pi =
+
+    0.0039
+
+
+pi =
+
+    0.0039    0.0469
+
+
+pi =
+
+    0.0039    0.0469    0.2109
+
+
+pi =
+
+    0.0039    0.0469    0.2109    0.4219
+
+
+pi =
+
+    0.0039    0.0469    0.2109    0.4219    0.3164
+
+</pre>
+<img vspace="5" hspace="5" src="HW5_Main_Heflin_01.png" alt=""> <h2 id="3">Problem 3</h2>
+<p>a)</p>
+<pre class="codeinput">p_a=mat_p(1); <span class="comment">%Checking</span>
+p_test=mat_p(.6); <span class="comment">%Testing</span>
+q_0=[1,1,1,1,1,1,1,1]./8;
+q_100=q_0*(p_a^100)
+q_101=q_0*(p_a^101)
+<span class="comment">%does not converge</span>
+<span class="comment">%{
+</span><span class="comment">q_100_test=q_0*(p_test^100)
+</span><span class="comment">q_101_test=q_0*(p_test^101)
+</span><span class="comment">%converges
+</span><span class="comment">%}
+</span>
+<span class="comment">%b</span>
+d=.85
+
+p=mat_p(d)
+diff=1;
+n=1;
+q_n1=q_0;
+<span class="keyword">while</span> diff&gt;10e-6
+q_n=q_n1;
+q_n1=q_n*p;
+diff=mean(abs(q_n1-q_n))
+n=n+1;
+<span class="keyword">if</span> n&gt;1000
+    <span class="keyword">break</span>
+<span class="keyword">end</span>
+
+
+<span class="keyword">end</span>
+q_n
+q_n1
+n
+
+
+
+<span class="comment">% c)</span>
+
+
+
+<span class="comment">%{
+</span><span class="comment">function [y,t]=discrete(U,t,p,i)
+</span><span class="comment">V=rand(1);
+</span><span class="comment">t=t+1;
+</span><span class="comment">steps(1)=p(i,1);
+</span><span class="comment">for j=1:8
+</span><span class="comment">steps(j+1)=steps(j)+p(i,j);
+</span><span class="comment">end
+</span><span class="comment">if U&lt;=steps(1)
+</span><span class="comment">    [y,t]=discrete(V,t,p,i);
+</span><span class="comment">elseif U&lt;=steps(2)
+</span><span class="comment">    [y,t]=discrete(V,t,p,i);
+</span><span class="comment">elseif U&lt;=steps(3)
+</span><span class="comment">    [y,t]=discrete(V,t,p,i);
+</span><span class="comment">elseif U&lt;=steps(4)
+</span><span class="comment">    [y,t]=discrete(V,t,p,i);
+</span><span class="comment">elseif U&lt;=steps(5)
+</span><span class="comment">    [y,t]=discrete(V,t,p,i);
+</span><span class="comment">elseif U&lt;=steps(6)
+</span><span class="comment">    [y,t]=discrete(V,t,p,i);
+</span><span class="comment">elseif U&lt;=steps(7)
+</span><span class="comment">    [y,t]=discrete(V,t,p,i);
+</span><span class="comment">else
+</span><span class="comment">    [y,t]=discrete(V,t,p,i);
+</span><span class="comment">end
+</span><span class="comment">
+</span><span class="comment">end
+</span><span class="comment">
+</span><span class="comment">
+</span><span class="comment">
+</span><span class="comment">%}
+</span>
+<span class="keyword">function</span> p=mat_p(d)
+p=[0,d./2,d./2,0,0,0,0,0;0,0,0,d,0,0,0,0;d./2,0,0,0,d./2,0,0,0;d./3,0,d./3,0,d./3,0,0,0;0,d./3,0,0,0,d./3,d./3,0;0,0,0,0,0,d,0,0;0,0,0,0,0,0,0,d;0,0,0,0,0,0,d,0];
+p=p+(1-d)./8;
+<span class="keyword">end</span>
+<span class="comment">%{
+</span><span class="comment">function steps=discete(P,t)
+</span><span class="comment">[m,n]=size(P);
+</span><span class="comment">steps=zeros(n,1);
+</span><span class="comment">for k=1:t
+</span><span class="comment">for i=1:m
+</span><span class="comment">    s=zeros(n,1);
+</span><span class="comment">    V=rand(1);
+</span><span class="comment">    j=1;
+</span><span class="comment">    while j&lt;n+1
+</span><span class="comment">
+</span><span class="comment">        if V&gt;s(j,1)
+</span><span class="comment">        s(j,1)=P(i,j)+s(j,1);
+</span><span class="comment">        j=j+1;
+</span><span class="comment">        else
+</span><span class="comment">        steps(j,1)=steps(j,1)+1;
+</span><span class="comment">        break
+</span><span class="comment">        end
+</span><span class="comment">    end
+</span><span class="comment">end
+</span><span class="comment">end
+</span><span class="comment">end
+</span><span class="comment">
+</span><span class="comment">%}
+</span>
+
+
+
+<span class="keyword">function</span> x=inverse_transform(P,X)
+
+<span class="keyword">end</span>
+</pre>
+<pre class="codeoutput">
+q_100 =
+
+  Columns 1 through 7
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.4375    0.2695
+
+  Column 8
+
+    0.2930
+
+
+q_101 =
+
+  Columns 1 through 7
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.4375    0.2930
+
+  Column 8
+
+    0.2695
+
+
+d =
+
+    0.8500
+
+
+p =
+
+  Columns 1 through 7
+
+    0.0188    0.4437    0.4437    0.0188    0.0188    0.0188    0.0188
+    0.0188    0.0188    0.0188    0.8688    0.0188    0.0188    0.0188
+    0.4437    0.0188    0.0188    0.0188    0.4437    0.0188    0.0188
+    0.3021    0.0188    0.3021    0.0188    0.3021    0.0188    0.0188
+    0.0188    0.3021    0.0188    0.0188    0.0188    0.3021    0.3021
+    0.0188    0.0188    0.0188    0.0188    0.0188    0.8688    0.0188
+    0.0188    0.0188    0.0188    0.0188    0.0188    0.0188    0.0188
+    0.0188    0.0188    0.0188    0.0188    0.0188    0.0188    0.8688
+
+  Column 8
+
+    0.0188
+    0.0188
+    0.0188
+    0.0188
+    0.0188
+    0.0188
+    0.8688
+    0.0188
+
+
+diff =
+
+    0.0177
+
+
+diff =
+
+    0.0138
+
+
+diff =
+
+    0.0107
+
+
+diff =
+
+    0.0085
+
+
+diff =
+
+    0.0064
+
+
+diff =
+
+    0.0051
+
+
+diff =
+
+    0.0040
+
+
+diff =
+
+    0.0032
+
+
+diff =
+
+    0.0025
+
+
+diff =
+
+    0.0020
+
+
+diff =
+
+    0.0016
+
+
+diff =
+
+    0.0013
+
+
+diff =
+
+    0.0010
+
+
+diff =
+
+   8.6140e-04
+
+
+diff =
+
+   6.9436e-04
+
+
+diff =
+
+   5.7627e-04
+
+
+diff =
+
+   4.6925e-04
+
+
+diff =
+
+   3.9127e-04
+
+
+diff =
+
+   3.2136e-04
+
+
+diff =
+
+   2.6902e-04
+
+
+diff =
+
+   2.2256e-04
+
+
+diff =
+
+   1.8692e-04
+
+
+diff =
+
+   1.5555e-04
+
+
+diff =
+
+   1.3099e-04
+
+
+diff =
+
+   1.0953e-04
+
+
+diff =
+
+   9.2431e-05
+
+
+diff =
+
+   7.7579e-05
+
+
+diff =
+
+   6.5577e-05
+
+
+diff =
+
+   5.5202e-05
+
+
+diff =
+
+   4.6723e-05
+
+
+diff =
+
+   3.9422e-05
+
+
+diff =
+
+   3.3400e-05
+
+
+diff =
+
+   2.8230e-05
+
+
+diff =
+
+   2.3937e-05
+
+
+diff =
+
+   2.0259e-05
+
+
+diff =
+
+   1.7188e-05
+
+
+diff =
+
+   1.4563e-05
+
+
+diff =
+
+   1.2361e-05
+
+
+diff =
+
+   1.0481e-05
+
+
+diff =
+
+   8.8991e-06
+
+
+q_n =
+
+  Columns 1 through 7
+
+    0.0707    0.0688    0.0707    0.0772    0.0707    0.2585    0.1972
+
+  Column 8
+
+    0.1863
+
+
+q_n1 =
+
+  Columns 1 through 7
+
+    0.0707    0.0688    0.0707    0.0772    0.0707    0.2585    0.1971
+
+  Column 8
+
+    0.1863
+
+
+n =
+
+    41
+
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2026a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+clc
+clear
+close all
+%% Problem 1
+%b)
+clc
+clear
+a=.3;
+b=.1;
+delta_0=[1,0,0,0,0];
+p_1=zeros(5,5);
+p_1(1,1)=1-a;
+p_1(1,2)=a;
+for i=2:4
+
+    p_1(i,i+1)=a.*(4-i)./i;
+    p_1(i,i-1)=b.*i./4;
+    p_1(i,i)=1-p_1(i,i+1)-p_1(i,i-1);
+
+end
+p_1
+q_50=delta_0*(p_1^50)
+q_51=delta_0*(p_1^51)
+n=1:60;
+for i=1:60
+   
+q=delta_0*(p_1^i);
+q_2(i)=q(2);
+q_3(i)=q(3);
+q_ave_2(i)=mean(q_2);
+end
+[V,lambda]=eig(p_1)
+figure
+hold on
+plot(n,q_2)
+plot(n,q_3)
+plot(n,q_ave_2)
+legend('q_2','q_3','running average')
+xlabel('n')
+ylabel('q value')
+hold off
+for i=0:4
+pi(i+1)=((.25).^(4-i)).*((3./4).^i).*factorial(4)./(factorial(i).*factorial(4-i))
+end
+
+%% Problem 3
+% a)
+
+p_a=mat_p(1); %Checking
+p_test=mat_p(.6); %Testing
+q_0=[1,1,1,1,1,1,1,1]./8;
+q_100=q_0*(p_a^100)
+q_101=q_0*(p_a^101)
+%does not converge
+%{
+q_100_test=q_0*(p_test^100)
+q_101_test=q_0*(p_test^101) 
+%converges
+%}
+
+%b
+d=.85
+
+p=mat_p(d)
+diff=1;
+n=1;
+q_n1=q_0;
+while diff>10e-6
+q_n=q_n1;
+q_n1=q_n*p;
+diff=mean(abs(q_n1-q_n))
+n=n+1;
+if n>1000
+    break
+end
+
+
+end
+q_n
+q_n1
+n
+
+
+
+% c)
+
+
+
+%{
+function [y,t]=discrete(U,t,p,i)
+V=rand(1);
+t=t+1;
+steps(1)=p(i,1);
+for j=1:8
+steps(j+1)=steps(j)+p(i,j);
+end
+if U<=steps(1)
+    [y,t]=discrete(V,t,p,i);
+elseif U<=steps(2)
+    [y,t]=discrete(V,t,p,i);
+elseif U<=steps(3)
+    [y,t]=discrete(V,t,p,i);
+elseif U<=steps(4)
+    [y,t]=discrete(V,t,p,i);
+elseif U<=steps(5)
+    [y,t]=discrete(V,t,p,i);
+elseif U<=steps(6)
+    [y,t]=discrete(V,t,p,i);
+elseif U<=steps(7)
+    [y,t]=discrete(V,t,p,i);
+else
+    [y,t]=discrete(V,t,p,i);
+end
+
+end
+
+
+
+%}
+
+function p=mat_p(d)
+p=[0,d./2,d./2,0,0,0,0,0;0,0,0,d,0,0,0,0;d./2,0,0,0,d./2,0,0,0;d./3,0,d./3,0,d./3,0,0,0;0,d./3,0,0,0,d./3,d./3,0;0,0,0,0,0,d,0,0;0,0,0,0,0,0,0,d;0,0,0,0,0,0,d,0];
+p=p+(1-d)./8;
+end
+%{
+function steps=discete(P,t)
+[m,n]=size(P);
+steps=zeros(n,1);
+for k=1:t
+for i=1:m
+    s=zeros(n,1);
+    V=rand(1);
+    j=1;
+    while j<n+1
+        
+        if V>s(j,1)
+        s(j,1)=P(i,j)+s(j,1);
+        j=j+1;
+        else
+        steps(j,1)=steps(j,1)+1;
+        break
+        end
+    end
+end
+end
+end
+
+%}
+        
+
+
+
+function x=inverse_transform(P,X)
+
+end
+##### SOURCE END #####
+-->
+</body>
+</html>
