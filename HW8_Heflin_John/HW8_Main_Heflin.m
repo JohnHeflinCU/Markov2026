@@ -1,0 +1,227 @@
+clc
+clear
+close all
+
+%% 2
+w=2e5;
+count_s_6=0;
+count_10=0;
+s_first=0;
+s_1=0;
+for i=1:w
+    j=1;
+    k=1;
+    t_s(1)=0;
+    t_b(1)=0;
+    count_s=0;
+    count_b=0;
+
+    while t_s(j)<5
+        j=j+1;
+        u=rand(1);
+        t_s(j)=-log(u)./3+t_s(j-1);
+        v=rand(1);
+        if v<=.4
+            count_s=count_s+1;
+        end
+    
+    end
+    while t_b(k)<5
+        k=k+1;
+        u=rand(1);
+        t_b(k)=-log(u)./2+t_b(k-1);
+        v=rand(1);
+        if v<=.4
+            count_b=count_b+1;
+        end
+    end
+    if 10==count_b+count_s
+        count_10=count_10+1;
+        if 6==count_s
+            count_s_6=count_s_6+1;
+        end
+    end
+    if t_s(2)<t_b(2)
+        s_first=s_first+1;
+    end
+    T_m(i)=t_b(2)+t_s(2);
+    if t_s(2)<=1
+        s_1=s_1+1;
+    end
+    c_b(i)=count_b;
+    c_s(i)=count_s;
+end
+T_m=mean(T_m)
+mean_s=mean(c_s)
+mean_b=mean(c_b)
+std_s=std(c_s)
+std_b=std(c_b)
+covariance=cov(c_s,c_b);
+corr=covariance./(std_b.*std_s)
+total=mean_s+mean_b
+s_1_r=s_1/2e5
+s_first_r=s_first/2e5
+ratio_6_10=count_s_6/count_10
+figure
+hold on
+histogram(c_s,'Normalization','pdf')
+xline(mean_s,'-r','LineWidth',4)
+xlabel('Number of arrivals from Stars')
+ylabel('Probability density')
+title('Number of photon arrivals from star')
+hold off
+figure
+hold on
+histogram(c_b,'Normalization','pdf')
+xline(mean_b,'-r','LineWidth',4)
+xlabel('Number of arrivals from Sky Background')
+ylabel('Probability density')
+title('Number of photon arrivals from sky')
+
+hold off
+
+
+%direct simulation
+w=2e5;
+lambda_s_d=3*.4;
+lambda_b_d=2*.4;
+for i=1:w
+
+j=1;
+k=1;
+t_s_d(1)=0;
+t_b_d(1)=0;
+
+while t_s_d(j)<5
+    j=j+1;
+    u=rand(1);
+    t_s_d(j)=-log(u)./lambda_s_d+t_s_d(j-1);
+
+
+end
+while t_b_d(k)<5
+    k=k+1;
+    u=rand(1);
+    t_b_d(k)=-log(u)./lambda_b_d+t_b_d(k-1);
+   
+end
+c_b_d(i)=k-1;
+c_s_d(i)=j-1;
+end
+mean_s_d=mean(c_s_d)
+mean_b_d=mean(c_b_d)
+std_s_d=std(c_s_d)
+std_b_d=std(c_b_d)
+covariance=cov(c_s_d,c_b_d);
+corr=covariance./(std_b_d.*std_s_d)
+
+
+figure
+hold on
+histogram(c_s_d,'Normalization','pdf')
+xline(mean_s_d,'-r','LineWidth',4)
+xlabel('Number of arrivals from Stars')
+ylabel('Probability density')
+title('Number of photon arrivals from star (direct simulation)')
+hold off
+
+figure
+hold on
+histogram(c_b_d,'Normalization','pdf')
+xline(mean_b_d,'-r','LineWidth',4)
+xlabel('Number of arrivals from Sky Background')
+ylabel('Probability density')
+title('Number of photon arrivals from sky (direct simulation)')
+hold off
+
+
+
+
+
+%% 3
+
+%t=1:1./60:720;
+j=1;
+t(1)=0;
+while t(j)<=720
+    j=j+1;
+    u=rand(1);
+    t(j)=-log(u)./20+t(j-1);
+    
+end
+
+
+count=0;
+for i=1:length(t)
+    u=rand(1);
+    if u<rate(t(i))./20
+        count=count+1;
+        t_thin(count)=t(i);
+    end
+end
+frac=count./length(t)
+count_hour = zeros(1,720);
+count_hour_analytical=zeros(1,720);
+for i=1:720
+   count_hour(i)=sum(t_thin>=(i-1) & t_thin<i);
+   count_hour_analytical(i)=def_int(i-1,i);
+   n=0:29;
+   for k=1:length(n)
+       arrivals_34(k)=sum(t_thin>=3+24.*n(k) & t_thin<4+24.*n(k));
+   end
+end
+mean_arrivals_34 = mean(arrivals_34);
+std_arrivals_34 = std(arrivals_34);
+fprintf('Mean arrivals from 3:00 to 4:00: %.3f\n', mean_arrivals_34);
+mean_poisson=4.091;
+var_poisson=sqrt(4.091)
+
+for l=1:720
+sum_rate=sum(log(rate(1:l)));
+maximized_log(l)=sum_rate-def_int(0,720);
+end
+figure
+hold on
+plot(1:720,rate(1:720))
+plot(1:720,maximized_log)
+
+
+figure
+hold on
+plot(1:720,count_hour,'-*')
+plot(1:720,count_hour_analytical,'-' )
+plot(1:720,rate(1:720),'--')
+title('Thinned Counts Versus Analytical Counts')
+legend('Thinned Counts','Rate Function','Integral of Rate Function')
+xlabel('Hours')
+ylabel('Number of Arrivals')
+hold off
+figure
+plot(1:720, (count_hour-rate(1:720))./20)
+function lambda_t=rate(t)
+    lambda_t=12+8.*cos(pi.*(t-16)./12);
+end
+function N=int(t)
+    N=12.*t+96.*sin(pi.*(t-16)./12)./pi;
+end
+function N=def_int(s,t)
+    N=int(t)-int(s);
+end
+
+
+sum=0;
+for i=0:10
+    sum=sum+(7.1438^(i))*exp(-7.1438)/(factorial(i));
+end
+1-sum
+
+
+sum=0;
+for i=0:9
+    sum=sum+factorial(i+19)*((12/(12+5))^19)*((5/(5+12))^i)/(factorial(19)*factorial(i))
+    %sum=sum+(10^(i))*exp(-10)/(factorial(i));
+end
+1-sum
+
+
+

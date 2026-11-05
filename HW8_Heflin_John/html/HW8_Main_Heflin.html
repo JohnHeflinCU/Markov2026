@@ -1,0 +1,628 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>HW8_Main_Heflin</title>
+<meta name="generator" content="MATLAB 26.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2026-11-04">
+<meta name="DC.source" content="HW8_Main_Heflin.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#2">2</a>
+</li>
+<li>
+<a href="#3">3</a>
+</li>
+</ul>
+</div>
+<pre class="codeinput">clc
+clear
+close <span class="string">all</span>
+</pre>
+<h2 id="2">2</h2>
+<pre class="codeinput">w=2e5;
+count_s_6=0;
+count_10=0;
+s_first=0;
+s_1=0;
+<span class="keyword">for</span> i=1:w
+    j=1;
+    k=1;
+    t_s(1)=0;
+    t_b(1)=0;
+    count_s=0;
+    count_b=0;
+
+    <span class="keyword">while</span> t_s(j)&lt;5
+        j=j+1;
+        u=rand(1);
+        t_s(j)=-log(u)./3+t_s(j-1);
+        v=rand(1);
+        <span class="keyword">if</span> v&lt;=.4
+            count_s=count_s+1;
+        <span class="keyword">end</span>
+
+    <span class="keyword">end</span>
+    <span class="keyword">while</span> t_b(k)&lt;5
+        k=k+1;
+        u=rand(1);
+        t_b(k)=-log(u)./2+t_b(k-1);
+        v=rand(1);
+        <span class="keyword">if</span> v&lt;=.4
+            count_b=count_b+1;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> 10==count_b+count_s
+        count_10=count_10+1;
+        <span class="keyword">if</span> 6==count_s
+            count_s_6=count_s_6+1;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> t_s(2)&lt;t_b(2)
+        s_first=s_first+1;
+    <span class="keyword">end</span>
+    T_m(i)=t_b(2)+t_s(2);
+    <span class="keyword">if</span> t_s(2)&lt;=1
+        s_1=s_1+1;
+    <span class="keyword">end</span>
+    c_b(i)=count_b;
+    c_s(i)=count_s;
+<span class="keyword">end</span>
+T_m=mean(T_m)
+mean_s=mean(c_s)
+mean_b=mean(c_b)
+std_s=std(c_s)
+std_b=std(c_b)
+covariance=cov(c_s,c_b);
+corr=covariance./(std_b.*std_s)
+total=mean_s+mean_b
+s_1_r=s_1/2e5
+s_first_r=s_first/2e5
+ratio_6_10=count_s_6/count_10
+figure
+hold <span class="string">on</span>
+histogram(c_s,<span class="string">'Normalization'</span>,<span class="string">'pdf'</span>)
+xline(mean_s,<span class="string">'-r'</span>,<span class="string">'LineWidth'</span>,4)
+xlabel(<span class="string">'Number of arrivals from Stars'</span>)
+ylabel(<span class="string">'Probability density'</span>)
+title(<span class="string">'Number of photon arrivals from star'</span>)
+hold <span class="string">off</span>
+figure
+hold <span class="string">on</span>
+histogram(c_b,<span class="string">'Normalization'</span>,<span class="string">'pdf'</span>)
+xline(mean_b,<span class="string">'-r'</span>,<span class="string">'LineWidth'</span>,4)
+xlabel(<span class="string">'Number of arrivals from Sky Background'</span>)
+ylabel(<span class="string">'Probability density'</span>)
+title(<span class="string">'Number of photon arrivals from sky'</span>)
+
+hold <span class="string">off</span>
+
+
+<span class="comment">%direct simulation</span>
+w=2e5;
+lambda_s_d=3*.4;
+lambda_b_d=2*.4;
+<span class="keyword">for</span> i=1:w
+
+j=1;
+k=1;
+t_s_d(1)=0;
+t_b_d(1)=0;
+
+<span class="keyword">while</span> t_s_d(j)&lt;5
+    j=j+1;
+    u=rand(1);
+    t_s_d(j)=-log(u)./lambda_s_d+t_s_d(j-1);
+
+
+<span class="keyword">end</span>
+<span class="keyword">while</span> t_b_d(k)&lt;5
+    k=k+1;
+    u=rand(1);
+    t_b_d(k)=-log(u)./lambda_b_d+t_b_d(k-1);
+
+<span class="keyword">end</span>
+c_b_d(i)=k-1;
+c_s_d(i)=j-1;
+<span class="keyword">end</span>
+mean_s_d=mean(c_s_d)
+mean_b_d=mean(c_b_d)
+std_s_d=std(c_s_d)
+std_b_d=std(c_b_d)
+covariance=cov(c_s_d,c_b_d);
+corr=covariance./(std_b_d.*std_s_d)
+
+
+figure
+hold <span class="string">on</span>
+histogram(c_s_d,<span class="string">'Normalization'</span>,<span class="string">'pdf'</span>)
+xline(mean_s_d,<span class="string">'-r'</span>,<span class="string">'LineWidth'</span>,4)
+xlabel(<span class="string">'Number of arrivals from Stars'</span>)
+ylabel(<span class="string">'Probability density'</span>)
+title(<span class="string">'Number of photon arrivals from star (direct simulation)'</span>)
+hold <span class="string">off</span>
+
+figure
+hold <span class="string">on</span>
+histogram(c_b_d,<span class="string">'Normalization'</span>,<span class="string">'pdf'</span>)
+xline(mean_b_d,<span class="string">'-r'</span>,<span class="string">'LineWidth'</span>,4)
+xlabel(<span class="string">'Number of arrivals from Sky Background'</span>)
+ylabel(<span class="string">'Probability density'</span>)
+title(<span class="string">'Number of photon arrivals from sky (direct simulation)'</span>)
+hold <span class="string">off</span>
+</pre>
+<pre class="codeoutput">
+T_m =
+
+    0.8323
+
+
+mean_s =
+
+    6.4054
+
+
+mean_b =
+
+    4.3991
+
+
+std_s =
+
+    2.4882
+
+
+std_b =
+
+    2.0575
+
+
+corr =
+
+    1.2093   -0.0008
+   -0.0008    0.8269
+
+
+total =
+
+   10.8045
+
+
+s_1_r =
+
+    0.9501
+
+
+s_first_r =
+
+    0.5998
+
+
+ratio_6_10 =
+
+    0.2535
+
+
+mean_s_d =
+
+    7.0007
+
+
+mean_b_d =
+
+    5.0049
+
+
+std_s_d =
+
+    2.4457
+
+
+std_b_d =
+
+    2.0017
+
+
+corr =
+
+    1.2218   -0.0008
+   -0.0008    0.8185
+
+</pre>
+<h2 id="3">3</h2>
+<pre class="codeinput">
+<span class="comment">%t=1:1./60:720;</span>
+j=1;
+t(1)=0;
+<span class="keyword">while</span> t(j)&lt;=720
+    j=j+1;
+    u=rand(1);
+    t(j)=-log(u)./20+t(j-1);
+
+<span class="keyword">end</span>
+
+
+count=0;
+<span class="keyword">for</span> i=1:length(t)
+    u=rand(1);
+    <span class="keyword">if</span> u&lt;rate(t(i))./20
+        count=count+1;
+        t_thin(count)=t(i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+frac=count./length(t)
+count_hour = zeros(1,720);
+count_hour_analytical=zeros(1,720);
+<span class="keyword">for</span> i=1:720
+   count_hour(i)=sum(t_thin&gt;=(i-1) &amp; t_thin&lt;i);
+   count_hour_analytical(i)=def_int(i-1,i);
+   n=0:29;
+   <span class="keyword">for</span> k=1:length(n)
+       arrivals_34(k)=sum(t_thin&gt;=3+24.*n(k) &amp; t_thin&lt;4+24.*n(k));
+   <span class="keyword">end</span>
+<span class="keyword">end</span>
+mean_arrivals_34 = mean(arrivals_34);
+std_arrivals_34 = std(arrivals_34);
+fprintf(<span class="string">'Mean arrivals from 3:00 to 4:00: %.3f\n'</span>, mean_arrivals_34);
+mean_poisson=4.091;
+var_poisson=sqrt(4.091)
+
+<span class="keyword">for</span> l=1:720
+sum_rate=sum(log(rate(1:l)));
+maximized_log(l)=sum_rate-def_int(0,720);
+<span class="keyword">end</span>
+figure
+hold <span class="string">on</span>
+plot(1:720,rate(1:720))
+plot(1:720,maximized_log)
+
+
+figure
+hold <span class="string">on</span>
+plot(1:720,count_hour,<span class="string">'-*'</span>)
+plot(1:720,count_hour_analytical,<span class="string">'-'</span> )
+plot(1:720,rate(1:720),<span class="string">'--'</span>)
+title(<span class="string">'Thinned Counts Versus Analytical Counts'</span>)
+legend(<span class="string">'Thinned Counts'</span>,<span class="string">'Rate Function'</span>,<span class="string">'Integral of Rate Function'</span>)
+xlabel(<span class="string">'Hours'</span>)
+ylabel(<span class="string">'Number of Arrivals'</span>)
+hold <span class="string">off</span>
+figure
+plot(1:720, (count_hour-rate(1:720))./20)
+<span class="keyword">function</span> lambda_t=rate(t)
+    lambda_t=12+8.*cos(pi.*(t-16)./12);
+<span class="keyword">end</span>
+<span class="keyword">function</span> N=int(t)
+    N=12.*t+96.*sin(pi.*(t-16)./12)./pi;
+<span class="keyword">end</span>
+<span class="keyword">function</span> N=def_int(s,t)
+    N=int(t)-int(s);
+<span class="keyword">end</span>
+
+
+sum=0;
+<span class="keyword">for</span> i=0:10
+    sum=sum+(7.1438^(i))*exp(-7.1438)/(factorial(i));
+<span class="keyword">end</span>
+1-sum
+
+
+sum=0;
+<span class="keyword">for</span> i=0:9
+    sum=sum+factorial(i+19)*((12/(12+5))^19)*((5/(5+12))^i)/(factorial(19)*factorial(i))
+    <span class="comment">%sum=sum+(10^(i))*exp(-10)/(factorial(i));</span>
+<span class="keyword">end</span>
+1-sum
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2026a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+clc
+clear
+close all
+
+%% 2
+w=2e5;
+count_s_6=0;
+count_10=0;
+s_first=0;
+s_1=0;
+for i=1:w
+    j=1;
+    k=1;
+    t_s(1)=0;
+    t_b(1)=0;
+    count_s=0;
+    count_b=0;
+
+    while t_s(j)<5
+        j=j+1;
+        u=rand(1);
+        t_s(j)=-log(u)./3+t_s(j-1);
+        v=rand(1);
+        if v<=.4
+            count_s=count_s+1;
+        end
+    
+    end
+    while t_b(k)<5
+        k=k+1;
+        u=rand(1);
+        t_b(k)=-log(u)./2+t_b(k-1);
+        v=rand(1);
+        if v<=.4
+            count_b=count_b+1;
+        end
+    end
+    if 10==count_b+count_s
+        count_10=count_10+1;
+        if 6==count_s
+            count_s_6=count_s_6+1;
+        end
+    end
+    if t_s(2)<t_b(2)
+        s_first=s_first+1;
+    end
+    T_m(i)=t_b(2)+t_s(2);
+    if t_s(2)<=1
+        s_1=s_1+1;
+    end
+    c_b(i)=count_b;
+    c_s(i)=count_s;
+end
+T_m=mean(T_m)
+mean_s=mean(c_s)
+mean_b=mean(c_b)
+std_s=std(c_s)
+std_b=std(c_b)
+covariance=cov(c_s,c_b);
+corr=covariance./(std_b.*std_s)
+total=mean_s+mean_b
+s_1_r=s_1/2e5
+s_first_r=s_first/2e5
+ratio_6_10=count_s_6/count_10
+figure
+hold on
+histogram(c_s,'Normalization','pdf')
+xline(mean_s,'-r','LineWidth',4)
+xlabel('Number of arrivals from Stars')
+ylabel('Probability density')
+title('Number of photon arrivals from star')
+hold off
+figure
+hold on
+histogram(c_b,'Normalization','pdf')
+xline(mean_b,'-r','LineWidth',4)
+xlabel('Number of arrivals from Sky Background')
+ylabel('Probability density')
+title('Number of photon arrivals from sky')
+
+hold off
+
+
+%direct simulation
+w=2e5;
+lambda_s_d=3*.4;
+lambda_b_d=2*.4;
+for i=1:w
+
+j=1;
+k=1;
+t_s_d(1)=0;
+t_b_d(1)=0;
+
+while t_s_d(j)<5
+    j=j+1;
+    u=rand(1);
+    t_s_d(j)=-log(u)./lambda_s_d+t_s_d(j-1);
+
+
+end
+while t_b_d(k)<5
+    k=k+1;
+    u=rand(1);
+    t_b_d(k)=-log(u)./lambda_b_d+t_b_d(k-1);
+   
+end
+c_b_d(i)=k-1;
+c_s_d(i)=j-1;
+end
+mean_s_d=mean(c_s_d)
+mean_b_d=mean(c_b_d)
+std_s_d=std(c_s_d)
+std_b_d=std(c_b_d)
+covariance=cov(c_s_d,c_b_d);
+corr=covariance./(std_b_d.*std_s_d)
+
+
+figure
+hold on
+histogram(c_s_d,'Normalization','pdf')
+xline(mean_s_d,'-r','LineWidth',4)
+xlabel('Number of arrivals from Stars')
+ylabel('Probability density')
+title('Number of photon arrivals from star (direct simulation)')
+hold off
+
+figure
+hold on
+histogram(c_b_d,'Normalization','pdf')
+xline(mean_b_d,'-r','LineWidth',4)
+xlabel('Number of arrivals from Sky Background')
+ylabel('Probability density')
+title('Number of photon arrivals from sky (direct simulation)')
+hold off
+
+
+
+
+
+%% 3
+
+%t=1:1./60:720;
+j=1;
+t(1)=0;
+while t(j)<=720
+    j=j+1;
+    u=rand(1);
+    t(j)=-log(u)./20+t(j-1);
+    
+end
+
+
+count=0;
+for i=1:length(t)
+    u=rand(1);
+    if u<rate(t(i))./20
+        count=count+1;
+        t_thin(count)=t(i);
+    end
+end
+frac=count./length(t)
+count_hour = zeros(1,720);
+count_hour_analytical=zeros(1,720);
+for i=1:720
+   count_hour(i)=sum(t_thin>=(i-1) & t_thin<i);
+   count_hour_analytical(i)=def_int(i-1,i);
+   n=0:29;
+   for k=1:length(n)
+       arrivals_34(k)=sum(t_thin>=3+24.*n(k) & t_thin<4+24.*n(k));
+   end
+end
+mean_arrivals_34 = mean(arrivals_34);
+std_arrivals_34 = std(arrivals_34);
+fprintf('Mean arrivals from 3:00 to 4:00: %.3f\n', mean_arrivals_34);
+mean_poisson=4.091;
+var_poisson=sqrt(4.091)
+
+for l=1:720
+sum_rate=sum(log(rate(1:l)));
+maximized_log(l)=sum_rate-def_int(0,720);
+end
+figure
+hold on
+plot(1:720,rate(1:720))
+plot(1:720,maximized_log)
+
+
+figure
+hold on
+plot(1:720,count_hour,'-*')
+plot(1:720,count_hour_analytical,'-' )
+plot(1:720,rate(1:720),'REPLACE_WITH_DASH_DASH')
+title('Thinned Counts Versus Analytical Counts')
+legend('Thinned Counts','Rate Function','Integral of Rate Function')
+xlabel('Hours')
+ylabel('Number of Arrivals')
+hold off
+figure
+plot(1:720, (count_hour-rate(1:720))./20)
+function lambda_t=rate(t)
+    lambda_t=12+8.*cos(pi.*(t-16)./12);
+end
+function N=int(t)
+    N=12.*t+96.*sin(pi.*(t-16)./12)./pi;
+end
+function N=def_int(s,t)
+    N=int(t)-int(s);
+end
+
+
+sum=0;
+for i=0:10
+    sum=sum+(7.1438^(i))*exp(-7.1438)/(factorial(i));
+end
+1-sum
+
+
+sum=0;
+for i=0:9
+    sum=sum+factorial(i+19)*((12/(12+5))^19)*((5/(5+12))^i)/(factorial(19)*factorial(i))
+    %sum=sum+(10^(i))*exp(-10)/(factorial(i));
+end
+1-sum
+
+
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>
